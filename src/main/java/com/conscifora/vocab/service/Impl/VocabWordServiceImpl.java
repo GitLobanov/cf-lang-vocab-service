@@ -1,9 +1,9 @@
 package com.conscifora.vocab.service.Impl;
 
 import com.conscifora.vocab.domain.VocabTranslation;
-import com.conscifora.vocab.dto.VocabDTO;
-import com.conscifora.vocab.dto.request.VocabWordRequestDto;
-import com.conscifora.vocab.dto.response.VocabWordResponseDto;
+import com.conscifora.vocab.dto.VocabWordDto;
+import com.conscifora.vocab.dto.request.VocabRequestDto;
+import com.conscifora.vocab.dto.response.VocabResponseDto;
 import com.conscifora.vocab.mapper.VocabTranslationMapper;
 import com.conscifora.vocab.repository.VocabTranslationRepository;
 import com.conscifora.vocab.service.VocabWordService;
@@ -14,8 +14,7 @@ import org.springframework.data.jpa.repository.Lock;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 @Service
 @RequiredArgsConstructor
@@ -27,18 +26,27 @@ public class VocabWordServiceImpl implements VocabWordService {
     @Override
     @Transactional
     @Lock(LockModeType.OPTIMISTIC)
-    public VocabWordResponseDto findTranslations(VocabWordRequestDto vocabWordRequestDto) {
+    public Optional<VocabResponseDto> findTranslations(VocabRequestDto vocabRequestDto) {
         VocabTranslationFilter filter = VocabTranslationFilter.builder()
-                .vocabSourceWord(vocabWordRequestDto.word())
-                .translationType(vocabWordRequestDto.translationType())
-                .vocabSourceLanguageCode(vocabWordRequestDto.langSourceCode())
-                .vocabTargetLanguageCodeIn(vocabWordRequestDto.langTargetCode())
+                .vocabSourceWord(vocabRequestDto.word())
+                .translationType(vocabRequestDto.translationType())
+                .vocabSourceLanguageCode(vocabRequestDto.langSourceCode())
+                .vocabTargetLanguageCodeIn(vocabRequestDto.langTargetCode())
                 .build();
 
         List<VocabTranslation> translates = vocabTranslationRepository.findAll(filter.toSpecification());
-        Set<VocabDTO> dtos = vocabTranslationMapper.toDtos(translates);
+        Set<VocabWordDto> translations = vocabTranslationMapper.directTranslationToDto(translates);
 
-        return new VocabWordResponseDto(dtos);
+        return Optional.of(
+                VocabResponseDto.builder()
+                        .translations(translations)
+//                        .definitions()
+//                        .examples()
+//                        .synonyms()
+//                        .antonyms()
+//                        .slangs()
+                        .build()
+        );
     }
 
 }

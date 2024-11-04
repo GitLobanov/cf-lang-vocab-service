@@ -7,7 +7,7 @@ import lombok.Builder;
 import java.util.List;
 
 @Builder
-public record VocabWordRequestDto(
+public record VocabRequestDto(
         String word,
         TranslationType translationType,
         LanguageCode langSourceCode,
