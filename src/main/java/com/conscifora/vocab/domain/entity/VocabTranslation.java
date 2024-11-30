@@ -1,22 +1,27 @@
-package com.conscifora.vocab.domain;
+package com.conscifora.vocab.domain.entity;
 
+import com.conscifora.vocab.domain.constant.TranslationType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.LinkedHashSet;
-import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
+@Builder
 @Entity
 @Table(name = "vocab_translation")
+@NoArgsConstructor
+@AllArgsConstructor
 public class VocabTranslation {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vocab_translation_seq")
-    @SequenceGenerator(name = "vocab_translation_seq")
+    @GeneratedValue(strategy = GenerationType.UUID)
     @Column(name = "id", nullable = false)
-    private Long id;
+    private UUID id;
 
     @Enumerated(EnumType.STRING)
     private TranslationType translationType;

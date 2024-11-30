@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.*;
 
 @RestController
-@RequestMapping("vocab/")
+@RequestMapping("vocab-service/")
 @RequiredArgsConstructor
 public class DefinitionController {
 

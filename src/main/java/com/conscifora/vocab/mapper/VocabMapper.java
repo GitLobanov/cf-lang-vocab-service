@@ -1,7 +1,7 @@
 package com.conscifora.vocab.mapper;
 
 import com.conscifora.vocab.dto.VocabWordDto;
-import com.conscifora.vocab.domain.Vocab;
+import com.conscifora.vocab.domain.entity.Vocab;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)

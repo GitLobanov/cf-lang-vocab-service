@@ -3,7 +3,7 @@ package com.conscifora.token.service;
 
 import com.conscifora.token.config.RedisCVTokenConfig;
 import com.conscifora.token.domain.CVToken;
-import com.conscifora.vocab.ConsciforavocabApplication;
+import com.conscifora.ConsciforavocabApplication;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;

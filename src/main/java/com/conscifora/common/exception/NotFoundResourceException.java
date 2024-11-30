@@ -1,4 +1,4 @@
-package com.conscifora.vocab.exception;
+package com.conscifora.common.exception;
 
 public class NotFoundResourceException extends RuntimeException{
 

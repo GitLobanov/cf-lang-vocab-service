@@ -1,4 +1,4 @@
-package com.conscifora.vocab.domain;
+package com.conscifora.vocab.domain.constant;
 
 public enum TranslationType
 {

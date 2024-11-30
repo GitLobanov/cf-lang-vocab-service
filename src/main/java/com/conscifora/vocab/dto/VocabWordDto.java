@@ -1,7 +1,7 @@
 package com.conscifora.vocab.dto;
 
-import com.conscifora.vocab.domain.LanguageCode;
-import com.conscifora.vocab.domain.Vocab;
+import com.conscifora.vocab.domain.constant.LanguageCode;
+import com.conscifora.vocab.domain.entity.Vocab;
 import lombok.Builder;
 
 /**

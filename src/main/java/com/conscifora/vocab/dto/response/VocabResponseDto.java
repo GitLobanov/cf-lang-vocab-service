@@ -1,6 +1,5 @@
 package com.conscifora.vocab.dto.response;
 
-import com.conscifora.vocab.domain.*;
 import com.conscifora.vocab.dto.*;
 import lombok.Builder;
 

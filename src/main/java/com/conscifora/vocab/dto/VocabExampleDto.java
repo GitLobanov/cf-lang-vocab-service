@@ -1,9 +1,9 @@
 package com.conscifora.vocab.dto;
 
-import java.util.Set;
+import com.conscifora.vocab.domain.entity.VocabExamples;
 
 /**
- * DTO for {@link com.conscifora.vocab.domain.VocabExamples}
+ * DTO for {@link VocabExamples}
  */
 public record VocabExampleDto(
         String text) {

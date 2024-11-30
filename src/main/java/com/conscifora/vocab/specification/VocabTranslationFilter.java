@@ -1,8 +1,8 @@
 package com.conscifora.vocab.specification;
 
-import com.conscifora.vocab.domain.LanguageCode;
-import com.conscifora.vocab.domain.TranslationType;
-import com.conscifora.vocab.domain.VocabTranslation;
+import com.conscifora.vocab.domain.constant.LanguageCode;
+import com.conscifora.vocab.domain.constant.TranslationType;
+import com.conscifora.vocab.domain.entity.VocabTranslation;
 import lombok.Builder;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.util.StringUtils;

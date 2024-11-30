@@ -1,6 +1,13 @@
 package com.conscifora.vocab.mapper;
 
-import com.conscifora.vocab.domain.VocabTranslation;
+import com.conscifora.vocab.domain.entity.VocabDefinitions;
+import com.conscifora.vocab.domain.entity.VocabExamples;
+import com.conscifora.vocab.domain.entity.VocabTranslation;
+import com.conscifora.vocab.dto.VocabAntonymDto;
+import com.conscifora.vocab.dto.VocabDefinitionDto;
+import com.conscifora.vocab.dto.VocabExampleDto;
+import com.conscifora.vocab.dto.VocabSlangDto;
+import com.conscifora.vocab.dto.VocabSynonymDto;
 import com.conscifora.vocab.dto.VocabWordDto;
 import org.mapstruct.*;
 
@@ -15,12 +22,27 @@ public interface VocabTranslationMapper {
     @Mapping(source = "vocabTarget.word", target = "word")
     VocabWordDto wordToDto(VocabTranslation vocabTranslation);
 
+    @Mapping(source = "text", target = "text")
+    VocabExampleDto exampleToDto(VocabExamples vocabTranslation);
+
+    @Mapping(source = "definition", target = "definition")
+    VocabDefinitionDto definitionToDto(VocabDefinitions vocabTranslation);
+
+    @Mapping(source = "vocabTarget.word", target = "synonym")
+    VocabSynonymDto synonymToDto(VocabTranslation vocabTranslation);
+
+    @Mapping(source = "vocabTarget.word", target = "antonym")
+    VocabAntonymDto antonymToDto(VocabTranslation vocabTranslation);
+
+    @Mapping(source = "vocabTarget.word", target = "record")
+    VocabSlangDto slangToDto(VocabTranslation vocabTranslation);
+
     Set<VocabWordDto> directTranslationToDto(List<VocabTranslation> vocabTranslation);
-    Set<VocabWordDto> examplesToDto(List<VocabTranslation> vocabTranslation);
-    Set<VocabWordDto> definitionToDto(List<VocabTranslation> vocabTranslation);
-    Set<VocabWordDto> synonymToDto(List<VocabTranslation> vocabTranslation);
-    Set<VocabWordDto> antonymToDto(List<VocabTranslation> vocabTranslation);
-    Set<VocabWordDto> slangToDto(List<VocabTranslation> vocabTranslation);
+    Set<VocabExampleDto> examplesToDto(Set<VocabExamples> vocabExamples);
+    Set<VocabDefinitionDto> definitionToDto(Set<VocabDefinitions> vocabDefinitions);
+    Set<VocabSynonymDto> synonymToDto(Set<VocabTranslation> vocabTranslation);
+    Set<VocabAntonymDto> antonymToDto(Set<VocabTranslation> vocabTranslation);
+    Set<VocabSlangDto> slangToDto(Set<VocabTranslation> vocabTranslation);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
     VocabTranslation partialUpdate(VocabWordDto vocabWordDto, @MappingTarget VocabTranslation vocabTranslation);

@@ -1,4 +1,4 @@
-package com.conscifora.vocab.domain;
+package com.conscifora.vocab.domain.entity;
 
 import jakarta.persistence.*;
 import lombok.Getter;
@@ -6,6 +6,7 @@ import lombok.Setter;
 
 import java.util.LinkedHashSet;
 import java.util.Set;
+import java.util.UUID;
 
 @Getter
 @Setter
@@ -13,10 +14,8 @@ import java.util.Set;
 @Table(name = "vocab_examples")
 public class VocabExamples {
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "vocab_examples_seq")
-    @SequenceGenerator(name = "vocab_examples_seq")
-    @Column(name = "id", nullable = false)
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.UUID)
+    private UUID id;
 
     @Column(length = 500)
     private String text;
