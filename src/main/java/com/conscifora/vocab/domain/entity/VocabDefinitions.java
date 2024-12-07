@@ -23,6 +23,7 @@ public class VocabDefinitions {
     @GeneratedValue(strategy = GenerationType.UUID)
     private UUID id;
 
+    @Column(length = 1000)
     String definition;
 
     @ManyToOne(fetch = FetchType.LAZY)

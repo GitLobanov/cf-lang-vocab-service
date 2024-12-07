@@ -1,6 +1,5 @@
 package com.conscifora.parser.service.impl;
 
-import com.conscifora.common.exception.NotFoundInRepositoryException;
 import com.conscifora.parser.domain.NinjasResponseDto;
 import com.conscifora.parser.service.ParserService;
 import com.conscifora.vocab.domain.constant.LanguageCode;
@@ -11,7 +10,6 @@ import com.conscifora.vocab.domain.entity.VocabTranslation;
 import com.conscifora.vocab.repository.VocabDefinitionsRepository;
 import com.conscifora.vocab.repository.VocabRepository;
 import com.conscifora.vocab.repository.VocabTranslationRepository;
-import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -20,9 +18,9 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 import reactor.core.scheduler.Schedulers;
 
-import java.util.List;
-import java.util.stream.Collectors;
-
+/**
+ * Синонимы и антонимы более менее пойдут, но определения хромают
+ */
 @Service
 @Slf4j
 public class NinjasParserService implements ParserService<NinjasResponseDto> {
@@ -104,10 +102,10 @@ public class NinjasParserService implements ParserService<NinjasResponseDto> {
             log.info("Antonyms is saved, count: {}", result.getAntonyms().size());
 
             result.getSynonyms().stream()
-                    .map((synonym) -> vocabRepository.findByWord(word).
+                    .map((synonym) -> vocabRepository.findByWord(synonym).
                             orElse(vocabRepository.save(Vocab.builder()
                                     .languageCode(languageCode)
-                                    .word(word)
+                                    .word(synonym)
                                     .build())))
                     .forEach((synonym) -> vocabTranslationRepository.save(
                                     VocabTranslation.builder()
@@ -121,6 +119,12 @@ public class NinjasParserService implements ParserService<NinjasResponseDto> {
         });
     }
 
+    /**
+     * Создание запроса по переданному эндпоинту и слову
+     * @param endpointUrl
+     * @param word
+     * @return
+     */
     private Mono<NinjasResponseDto> fetchResponse(String endpointUrl, String word) {
         return webClient.get()
                 .uri(uriBuilder -> uriBuilder.path(endpointUrl).queryParam("word", word).build())

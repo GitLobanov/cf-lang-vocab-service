@@ -1,4 +1,4 @@
-package com.conscifora.vocab.dto.request;
+package com.conscifora.vocab.domain.dto.request;
 
 import com.conscifora.vocab.domain.constant.LanguageCode;
 import com.conscifora.vocab.domain.constant.TranslationType;

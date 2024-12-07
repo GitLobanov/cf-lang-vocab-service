@@ -1,22 +1,26 @@
 package com.conscifora.vocab.service.Impl;
 
+import com.conscifora.vocab.domain.constant.LanguageCode;
 import com.conscifora.vocab.domain.constant.TranslationType;
+import com.conscifora.vocab.domain.dto.request.VocabCreationRequestDto;
+import com.conscifora.vocab.domain.entity.Vocab;
 import com.conscifora.vocab.domain.entity.VocabDefinitions;
 import com.conscifora.vocab.domain.entity.VocabExamples;
 import com.conscifora.vocab.domain.entity.VocabTranslation;
-import com.conscifora.vocab.dto.VocabAntonymDto;
-import com.conscifora.vocab.dto.VocabDefinitionDto;
-import com.conscifora.vocab.dto.VocabExampleDto;
-import com.conscifora.vocab.dto.VocabSlangDto;
-import com.conscifora.vocab.dto.VocabSynonymDto;
-import com.conscifora.vocab.dto.VocabWordDto;
-import com.conscifora.vocab.dto.request.VocabRequestDto;
-import com.conscifora.vocab.dto.response.VocabResponseDto;
+import com.conscifora.vocab.domain.dto.VocabAntonymDto;
+import com.conscifora.vocab.domain.dto.VocabDefinitionDto;
+import com.conscifora.vocab.domain.dto.VocabExampleDto;
+import com.conscifora.vocab.domain.dto.VocabSlangDto;
+import com.conscifora.vocab.domain.dto.VocabSynonymDto;
+import com.conscifora.vocab.domain.dto.VocabWordDto;
+import com.conscifora.vocab.domain.dto.request.VocabRequestDto;
+import com.conscifora.vocab.domain.dto.response.VocabResponseDto;
 import com.conscifora.vocab.mapper.VocabTranslationMapper;
 import com.conscifora.vocab.repository.VocabDefinitionsRepository;
 import com.conscifora.vocab.repository.VocabExamplesRepository;
+import com.conscifora.vocab.repository.VocabRepository;
 import com.conscifora.vocab.repository.VocabTranslationRepository;
-import com.conscifora.vocab.service.VocabWordService;
+import com.conscifora.vocab.service.VocabService;
 import com.conscifora.vocab.specification.VocabTranslationFilter;
 import jakarta.persistence.LockModeType;
 import lombok.RequiredArgsConstructor;
@@ -30,12 +34,13 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Slf4j
-public class VocabWordServiceImpl implements VocabWordService {
+public class VocabServiceImpl implements VocabService {
 
     private final VocabTranslationRepository vocabTranslationRepository;
     private final VocabDefinitionsRepository vocabDefinitionsRepository;
     private final VocabExamplesRepository vocabExamplesRepository;
     private final VocabTranslationMapper vocabTranslationMapper;
+    private final VocabRepository vocabRepository;
 
     @Override
     @Transactional
@@ -84,6 +89,28 @@ public class VocabWordServiceImpl implements VocabWordService {
                         .slangs(slangs)
                         .build()
         );
+    }
+
+    @Override
+    public void createVocabTranslation(VocabCreationRequestDto vocabCreationRequestDto) {
+        Vocab ru = vocabRepository.findByWord(vocabCreationRequestDto.ru())
+                .orElse(Vocab.builder()
+                        .word(vocabCreationRequestDto.ru())
+                        .languageCode(LanguageCode.RU)
+                        .build());
+        Vocab en = vocabRepository.findByWord(vocabCreationRequestDto.en())
+                .orElse(Vocab.builder()
+                        .word(vocabCreationRequestDto.en())
+                        .languageCode(LanguageCode.EN)
+                        .build());
+
+        VocabTranslation vocabTranslation = VocabTranslation.builder()
+                .translationType(TranslationType.DIRECT)
+                .vocabSource(ru)
+                .vocabTarget(en)
+                .build();
+
+        vocabTranslationRepository.save(vocabTranslation);
     }
 
 }

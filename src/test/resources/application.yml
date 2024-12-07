@@ -1,0 +1,26 @@
+server:
+  port: 23002
+
+parser:
+  api:
+    ninjas:
+      base-url: https://api.api-ninjas.com
+      header:
+        key-name: X-Api-Key
+        key-value: XF2KcWY/sr7MUOuiw2OvzQ==qm1ZUa8Wi8YcDU3m
+      endpoints:
+        dictionary: /v1/dictionary
+        thesaurus: /v1/thesaurus
+
+    dictionary:
+      base-url: https://api.dictionaryapi.dev
+      endpoints:
+        entries: /api/v2/entries/en
+
+    urban:
+      base-url: https://urban-dictionary7.p.rapidapi.com
+      header:
+        key-name: X-Rapidapi-Key
+        key-value: 20822226aemsh2d2daf5147328e9p133ba8jsn342275131962
+      endpoints:
+        define: /v0/define

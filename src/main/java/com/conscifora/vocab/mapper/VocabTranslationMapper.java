@@ -3,12 +3,12 @@ package com.conscifora.vocab.mapper;
 import com.conscifora.vocab.domain.entity.VocabDefinitions;
 import com.conscifora.vocab.domain.entity.VocabExamples;
 import com.conscifora.vocab.domain.entity.VocabTranslation;
-import com.conscifora.vocab.dto.VocabAntonymDto;
-import com.conscifora.vocab.dto.VocabDefinitionDto;
-import com.conscifora.vocab.dto.VocabExampleDto;
-import com.conscifora.vocab.dto.VocabSlangDto;
-import com.conscifora.vocab.dto.VocabSynonymDto;
-import com.conscifora.vocab.dto.VocabWordDto;
+import com.conscifora.vocab.domain.dto.VocabAntonymDto;
+import com.conscifora.vocab.domain.dto.VocabDefinitionDto;
+import com.conscifora.vocab.domain.dto.VocabExampleDto;
+import com.conscifora.vocab.domain.dto.VocabSlangDto;
+import com.conscifora.vocab.domain.dto.VocabSynonymDto;
+import com.conscifora.vocab.domain.dto.VocabWordDto;
 import org.mapstruct.*;
 
 import java.util.List;

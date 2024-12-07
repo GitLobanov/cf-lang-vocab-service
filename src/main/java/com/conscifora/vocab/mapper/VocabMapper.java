@@ -1,6 +1,6 @@
 package com.conscifora.vocab.mapper;
 
-import com.conscifora.vocab.dto.VocabWordDto;
+import com.conscifora.vocab.domain.dto.VocabWordDto;
 import com.conscifora.vocab.domain.entity.Vocab;
 import org.mapstruct.*;
 

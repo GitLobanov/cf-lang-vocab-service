@@ -1,15 +1,16 @@
 package com.conscifora.vocab.controller;
 
-import com.conscifora.vocab.dto.request.VocabRequestDto;
-import com.conscifora.vocab.dto.response.VocabResponseDto;
-import com.conscifora.vocab.service.VocabWordService;
+import com.conscifora.vocab.domain.dto.request.VocabCreationRequestDto;
+import com.conscifora.vocab.domain.dto.request.VocabRequestDto;
+import com.conscifora.vocab.domain.dto.response.ErrorMessage;
+import com.conscifora.vocab.domain.dto.response.SuccessMessage;
+import com.conscifora.vocab.domain.dto.response.VocabResponseDto;
+import com.conscifora.vocab.service.VocabService;
 import io.swagger.v3.oas.annotations.Operation;
-import io.swagger.v3.oas.annotations.headers.Header;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import lombok.RequiredArgsConstructor;
-import org.springdoc.api.ErrorMessage;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,7 +20,7 @@ import org.springframework.web.bind.annotation.*;
 @RequiredArgsConstructor
 public class VocabController {
 
-    private final VocabWordService vocabWordService;
+    private final VocabService vocabService;
 
     /**
      * EP-1 Получение полной информации по слову
@@ -38,10 +39,25 @@ public class VocabController {
     public ResponseEntity<VocabResponseDto> getVocabInfo(@RequestBody VocabRequestDto vocabRequestDto) {
         // TODO WHEN WE CAN'T FIND VOCAB IN RESPONSE EMPTY DTO, NEED EXCEPTION MESSAGE
         VocabResponseDto response =
-                vocabWordService.findTranslations(vocabRequestDto)
+                vocabService.findTranslations(vocabRequestDto)
                         .orElseThrow(() -> new RuntimeException("Vocab not found"));
 
         return ResponseEntity.ok(response);
+    }
+
+    @Operation(summary = "EP1.1: Create vocab translation", tags = "vocab",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Success",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = SuccessMessage.class))),
+                    @ApiResponse(responseCode = "400", description = "Bad request",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ErrorMessage.class)))
+            })
+    @PostMapping("/create")
+    public ResponseEntity<String> createVocab (@RequestBody VocabCreationRequestDto vocabCreationRequestDto) {
+        vocabService.createVocabTranslation(vocabCreationRequestDto);
+        return ResponseEntity.ok("Data is saved");
     }
 
 }
