@@ -1,15 +1,15 @@
 package com.conscifora.vocab.mapper;
 
-import com.conscifora.vocab.dto.VocabDTO;
-import com.conscifora.vocab.domain.Vocab;
+import com.conscifora.vocab.domain.dto.VocabWordDto;
+import com.conscifora.vocab.domain.entity.Vocab;
 import org.mapstruct.*;
 
 @Mapper(unmappedTargetPolicy = ReportingPolicy.IGNORE, componentModel = MappingConstants.ComponentModel.SPRING)
 public interface VocabMapper {
-    Vocab toEntity(VocabDTO vocabDTO);
+    Vocab toEntity(VocabWordDto vocabWordDto);
 
-    VocabDTO toDto(Vocab vocab);
+    VocabWordDto toDto(Vocab vocab);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    Vocab partialUpdate(VocabDTO vocabDTO, @MappingTarget Vocab vocab);
+    Vocab partialUpdate(VocabWordDto vocabWordDto, @MappingTarget Vocab vocab);
 }
