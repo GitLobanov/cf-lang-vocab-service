@@ -30,6 +30,7 @@ public class Vocab {
     @Enumerated(EnumType.STRING)
     private LanguageCode languageCode;
 
+    @Column(unique = true)
     private String word;
 
     @ManyToMany(mappedBy = "vocabs")

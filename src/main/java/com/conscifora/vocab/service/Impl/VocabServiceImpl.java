@@ -2,6 +2,7 @@ package com.conscifora.vocab.service.Impl;
 
 import com.conscifora.vocab.domain.constant.LanguageCode;
 import com.conscifora.vocab.domain.constant.TranslationType;
+import com.conscifora.vocab.domain.dto.request.DefinitionRequestDto;
 import com.conscifora.vocab.domain.dto.request.VocabCreationRequestDto;
 import com.conscifora.vocab.domain.entity.Vocab;
 import com.conscifora.vocab.domain.entity.VocabDefinitions;
@@ -57,7 +58,7 @@ public class VocabServiceImpl implements VocabService {
 
         List<VocabTranslation> translationsFromDb = vocabTranslationRepository.findAll(filter.toSpecification());
         Set<VocabExamples> examplesFromDb = vocabExamplesRepository.findByVocabs_WordIgnoreCase(vocabRequestDto.word());
-        Set<VocabDefinitions> definitionsFromDb = vocabDefinitionsRepository.findByVocab_WordIgnoreCase(vocabRequestDto.word());
+        Set<VocabDefinitions> definitionsFromDb = vocabDefinitionsRepository.findSetByVocab_WordIgnoreCase(vocabRequestDto.word());
 
         // TODO CHANGE ALSO TO ONE FILTER SPECIFICATION
         Set<VocabTranslation> antonymsFromDb =
@@ -92,25 +93,64 @@ public class VocabServiceImpl implements VocabService {
     }
 
     @Override
-    public void createVocabTranslation(VocabCreationRequestDto vocabCreationRequestDto) {
-        Vocab ru = vocabRepository.findByWord(vocabCreationRequestDto.ru())
-                .orElse(Vocab.builder()
-                        .word(vocabCreationRequestDto.ru())
-                        .languageCode(LanguageCode.RU)
-                        .build());
-        Vocab en = vocabRepository.findByWord(vocabCreationRequestDto.en())
-                .orElse(Vocab.builder()
-                        .word(vocabCreationRequestDto.en())
-                        .languageCode(LanguageCode.EN)
-                        .build());
+    public void createVocabTranslation(List<VocabCreationRequestDto> vocabCreationRequestDto) {
 
-        VocabTranslation vocabTranslation = VocabTranslation.builder()
-                .translationType(TranslationType.DIRECT)
-                .vocabSource(ru)
-                .vocabTarget(en)
-                .build();
+        vocabCreationRequestDto
+                .forEach(vocabCreation -> {
+                    String sourceWord = vocabCreation.ru().split(", ")[0];
+                    String targetWord = vocabCreation.en().split(", ")[0];
 
-        vocabTranslationRepository.save(vocabTranslation);
+                    Optional<VocabTranslation> vocabTranslation = vocabTranslationRepository.findByVocabSource_WordIgnoreCaseOrVocabTarget_WordIgnoreCase(sourceWord, targetWord);
+
+                    if (vocabTranslation.isEmpty()) {
+                        Vocab ru = vocabRepository.findByWord(sourceWord)
+                                .orElse(Vocab.builder()
+                                        .word(sourceWord)
+                                        .languageCode(LanguageCode.RU)
+                                        .build());
+                        Vocab en = vocabRepository.findByWord(targetWord)
+                                .orElse(Vocab.builder()
+                                        .word(targetWord)
+                                        .languageCode(LanguageCode.EN)
+                                        .build());
+
+                        vocabRepository.save(ru);
+                        vocabRepository.save(en);
+
+                        VocabTranslation savedVocabTranslation = VocabTranslation.builder()
+                                .translationType(TranslationType.DIRECT)
+                                .vocabSource(ru)
+                                .vocabTarget(en)
+                                .build();
+
+                        vocabTranslationRepository.saveAndFlush(savedVocabTranslation);
+                    }
+                });
     }
 
+    @Override
+    public void createVocabDefinition(DefinitionRequestDto definitionRequestDto) {
+        definitionRequestDto
+                .definitions().forEach((sourceWord, definition) -> {
+
+                    Optional<VocabDefinitions> vocabDefinition = vocabDefinitionsRepository.findByVocab_WordIgnoreCase(sourceWord);
+
+                    if (vocabDefinition.isEmpty()) {
+                        Vocab vocab = vocabRepository.findByWord(sourceWord)
+                                .orElse(Vocab.builder()
+                                        .word(sourceWord)
+                                        .languageCode(LanguageCode.EN)
+                                        .build());
+
+                        vocabRepository.save(vocab);
+
+                        VocabDefinitions savedVocabDefinition = VocabDefinitions.builder()
+                                .definition(definition)
+                                .vocab(vocab)
+                                .build();
+
+                        vocabDefinitionsRepository.saveAndFlush(savedVocabDefinition);
+                    }
+                });
+    }
 }

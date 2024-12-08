@@ -1,5 +1,6 @@
 package com.conscifora.vocab.controller;
 
+import com.conscifora.vocab.domain.dto.request.DefinitionRequestDto;
 import com.conscifora.vocab.domain.dto.request.VocabCreationRequestDto;
 import com.conscifora.vocab.domain.dto.request.VocabRequestDto;
 import com.conscifora.vocab.domain.dto.response.ErrorMessage;
@@ -14,6 +15,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 @RestController
 @RequestMapping("/vocab-service")
@@ -54,10 +59,32 @@ public class VocabController {
                             content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
                                     schema = @Schema(implementation = ErrorMessage.class)))
             })
-    @PostMapping("/create")
-    public ResponseEntity<String> createVocab (@RequestBody VocabCreationRequestDto vocabCreationRequestDto) {
+    @PostMapping("/createVocab")
+    public ResponseEntity<SuccessMessage> createVocab (@RequestBody List<VocabCreationRequestDto> vocabCreationRequestDto) {
         vocabService.createVocabTranslation(vocabCreationRequestDto);
-        return ResponseEntity.ok("Data is saved");
+        return ResponseEntity.ok(new SuccessMessage("Vocab is saved"));
+    }
+
+
+    @Operation(summary = "EP1.1: Create vocab translation", tags = "vocab",
+            responses = {
+                    @ApiResponse(responseCode = "200", description = "Success",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = SuccessMessage.class))),
+                    @ApiResponse(responseCode = "400", description = "Bad request",
+                            content = @Content(mediaType = MediaType.APPLICATION_JSON_VALUE,
+                                    schema = @Schema(implementation = ErrorMessage.class)))
+            })
+    @PostMapping("/createDefinition")
+    public ResponseEntity<SuccessMessage> createDefinition (@RequestBody Map<String, String> vocabDefinitions) {
+        DefinitionRequestDto definitionRequestDto = DefinitionRequestDto.builder()
+                .definitions(new HashMap<>())
+                .build();
+        vocabDefinitions.forEach((word, definition) -> {
+            definitionRequestDto.definitions().put(word,definition);
+        });
+        vocabService.createVocabDefinition(definitionRequestDto);
+        return ResponseEntity.ok(new SuccessMessage("Definition is saved"));
     }
 
 }
