@@ -1,11 +1,11 @@
 server:
-  port: 23002
+  port: 25001
 
 spring:
   datasource:
-    url: jdbc:postgresql://193.124.33.88:21002/VocabDB
-    username: con
-    password: conpass
+    url: jdbc:postgresql://194.226.49.251:21010/VocabDB
+    username: microservice
+    password: 123f.&msdg
     driver-class-name: org.postgresql.Driver
 
   jpa:
