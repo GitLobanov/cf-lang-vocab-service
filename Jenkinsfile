@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('dev') {
       steps {
-        echo "hello from vocab-service"
+        echo "hello from new one"
       }
     }
 
