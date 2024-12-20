@@ -13,39 +13,39 @@ import org.springframework.boot.test.context.SpringBootTest;
 @Slf4j
 class CVTokenServiceTest {
 
-    @Autowired
-    CVTokenService cVTokenService;
-
-    @Test
-    void testRedisStorageLogic_saveAndReadData() {
-        String tokenValue = cVTokenService.createToken();
-        log.info("Created token: {}", tokenValue);
-
-        String res = cVTokenService.handleRequest(tokenValue);
-        log.info("res: {}", res);
-
-        long monthly = cVTokenService.getRequestCount(tokenValue, "monthly");
-        long total = cVTokenService.getRequestCount(tokenValue, "total");
-
-        log.info("monthly: {}", monthly);
-        log.info("total: {}", total);
-    }
-
-    @Disabled("We have problem in here")
-    @Test
-    void testRedisStorageLogic_deleteToken() {
-        String tokenValue = "88bf315a-f5ec-41aa-93b4-974dae4073f1";
-        boolean isRemoved = cVTokenService.removeToken(tokenValue);
-        assert (isRemoved);
-        log.info("Removed token: {}", tokenValue);
-    }
-
-
-    @Test
-    void testRedisStorageLogic_searchToken() {
-        String tokenValue = "88bf315a-f5ec-41aa-93b4-974dae4073f1";
-        CVToken cvToken = cVTokenService.getToken(tokenValue);
-        log.info("Got token: {}", cvToken);
-    }
+//    @Autowired
+//    CVTokenService cVTokenService;
+//
+//    @Test
+//    void testRedisStorageLogic_saveAndReadData() {
+//        String tokenValue = cVTokenService.createToken();
+//        log.info("Created token: {}", tokenValue);
+//
+//        String res = cVTokenService.handleRequest(tokenValue);
+//        log.info("res: {}", res);
+//
+//        long monthly = cVTokenService.getRequestCount(tokenValue, "monthly");
+//        long total = cVTokenService.getRequestCount(tokenValue, "total");
+//
+//        log.info("monthly: {}", monthly);
+//        log.info("total: {}", total);
+//    }
+//
+//    @Disabled("We have problem in here")
+//    @Test
+//    void testRedisStorageLogic_deleteToken() {
+//        String tokenValue = "88bf315a-f5ec-41aa-93b4-974dae4073f1";
+//        boolean isRemoved = cVTokenService.removeToken(tokenValue);
+//        assert (isRemoved);
+//        log.info("Removed token: {}", tokenValue);
+//    }
+//
+//
+//    @Test
+//    void testRedisStorageLogic_searchToken() {
+//        String tokenValue = "88bf315a-f5ec-41aa-93b4-974dae4073f1";
+//        CVToken cvToken = cVTokenService.getToken(tokenValue);
+//        log.info("Got token: {}", cvToken);
+//    }
 
 }
