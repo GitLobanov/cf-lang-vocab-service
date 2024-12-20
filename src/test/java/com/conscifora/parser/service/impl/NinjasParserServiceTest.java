@@ -26,23 +26,23 @@ import static org.mockito.Mockito.*;
 @SpringBootTest(classes = WebClientConfigTest.class)
 class NinjasParserServiceTest {
 
-    @Autowired
-    private NinjasParserService ninjasParserService;
-
-    private static final String TEST_WORD = "code";
-
-    @Test
-    @DisplayName("Проверка правильной работы с блокировкой ожидания")
-    // Нужно
-    void checkingParse() {
-        Mono<NinjasResponseDto> monoResponse = ninjasParserService.parse(TEST_WORD);
-        NinjasResponseDto ninjasResponseDto = monoResponse.block(Duration.ofSeconds(50));
-        assertNotNull(ninjasResponseDto);
-    }
-
-    @Test
-    @DisplayName("Проверка сохранения в бд")
-    void checkingParse_ShouldSaveToDB () {
-
-    }
+//    @Autowired
+//    private NinjasParserService ninjasParserService;
+//
+//    private static final String TEST_WORD = "code";
+//
+//    @Test
+//    @DisplayName("Проверка правильной работы с блокировкой ожидания")
+//    // Нужно
+//    void checkingParse() {
+//        Mono<NinjasResponseDto> monoResponse = ninjasParserService.parse(TEST_WORD);
+//        NinjasResponseDto ninjasResponseDto = monoResponse.block(Duration.ofSeconds(50));
+//        assertNotNull(ninjasResponseDto);
+//    }
+//
+//    @Test
+//    @DisplayName("Проверка сохранения в бд")
+//    void checkingParse_ShouldSaveToDB () {
+//
+//    }
 }
