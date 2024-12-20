@@ -1,5 +1,7 @@
+version: '3.8'
+
 services:
-  api:
+  vocab-service:
     build: .
     ports:
       - '25001:25001'
