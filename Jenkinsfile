@@ -5,17 +5,11 @@ pipeline {
         registry = ""
         dockerContainerName = 'vocab-service'
         dockerImageName = 'vocab-service'
+        VOCAB_DB_URL = "${env.VOCAB_DB_URL}"
+        POSTGRE_USERNAME = "${env.POSTGRE_USERNAME}"
+        POSTGRE_PASS = "${env.POSTGRE_PASS}"
       }
       stages {
-         stage('Env') {
-              steps {
-                    sh '''
-                    export VOCAB_DB_URL=${env.VOCAB_DB_URL}
-                    export POSTGRE_USERNAME=${env.POSTGRE_USERNAME}
-                    export POSTGRE_PASS=${env.POSTGRE_PASS}
-                    '''
-              }
-         }
          stage('Build') {
               steps {
                     withMaven(maven: 'MAVEN_ENV') {

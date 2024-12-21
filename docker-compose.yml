@@ -3,6 +3,10 @@ version: '3.8'
 services:
   vocab-service:
     build: .
+    environment:
+      - VOCAB_DB_URL=${VOCAB_DB_URL}
+      - POSTGRE_USERNAME=${POSTGRE_USERNAME}
+      - POSTGRE_PASS=${POSTGRE_PASS}
     ports:
       - '25001:25001'
     container_name: vocab-service
