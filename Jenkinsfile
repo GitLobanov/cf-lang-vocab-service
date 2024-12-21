@@ -8,6 +8,8 @@ pipeline {
         VOCAB_DB_URL = "${env.VOCAB_DB_URL}"
         POSTGRE_USERNAME = "${env.POSTGRE_USERNAME}"
         POSTGRE_PASS = "${env.POSTGRE_PASS}"
+        NINJAS_KEY = "${env.NINJAS_KEY}"
+        URBAN_KEY = "${env.URBAN_KEY}"
       }
       stages {
          stage('Build') {

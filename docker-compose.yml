@@ -7,6 +7,8 @@ services:
       - VOCAB_DB_URL=${VOCAB_DB_URL}
       - POSTGRE_USERNAME=${POSTGRE_USERNAME}
       - POSTGRE_PASS=${POSTGRE_PASS}
+      - URBAN_KEY=${URBAN_KEY}
+      - NINJAS_KEY=${NINJAS_KEY}
     ports:
       - '25001:25001'
     container_name: vocab-service
