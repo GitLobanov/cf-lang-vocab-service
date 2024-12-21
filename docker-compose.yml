@@ -6,10 +6,6 @@ services:
     ports:
       - '25001:25001'
     container_name: vocab-service
-    environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://194.226.49.251:21010/VocabDB
-      - SPRING_DATASOURCE_USERNAME=microservice
-      - SPRING_DATASOURCE_PASSWORD=123f.&msdg
     networks:
       - concifora_default
 networks:
