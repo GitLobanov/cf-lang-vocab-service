@@ -9,15 +9,14 @@ pipeline {
       stages {
          stage('Build') {
                steps {
-                    sh '''
-                    export VOCAB_DB_URL=${env.VOCAB_DB_URL}
-                    export POSTGRE_USERNAME=${env.POSTGRE_USERNAME}
-                    export POSTGRE_PASS=${env.POSTGRE_PASS}
-                    '''
-               }
-               steps {
                     withMaven(maven: 'MAVEN_ENV') {
-                        sh "mvn ${MAVEN_ARGS}"
+                        sh '''
+                        export VOCAB_DB_URL=${env.VOCAB_DB_URL}
+                        export POSTGRE_USERNAME=${env.POSTGRE_USERNAME}
+                        export POSTGRE_PASS=${env.POSTGRE_PASS}
+
+                        mvn ${MAVEN_ARGS}
+                        '''
                     }
                }
          }
