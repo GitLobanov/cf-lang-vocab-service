@@ -21,27 +21,3 @@ spring:
     redis:
       host: localhost
       port: 6379
-
-parser:
-  api:
-    ninjas:
-      base-url: https://api.api-ninjas.com
-      header:
-        key-name: X-Api-Key
-        key-value: ${NINJAS_KEY}
-      endpoints:
-        dictionary: /v1/dictionary
-        thesaurus: /v1/thesaurus
-
-    dictionary:
-      base-url: https://api.dictionaryapi.dev
-      endpoints:
-        entries: /api/v2/entries/en
-
-    urban:
-      base-url: https://urban-dictionary7.p.rapidapi.com
-      header:
-        key-name: X-Rapidapi-Key
-        key-value: ${URBAN_KEY}
-      endpoints:
-        define: /v0/define

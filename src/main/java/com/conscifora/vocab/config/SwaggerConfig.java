@@ -1,4 +1,4 @@
-package com.conscifora.common.config;
+package com.conscifora.vocab.config;
 
 import io.swagger.v3.oas.models.Components;
 import io.swagger.v3.oas.models.OpenAPI;

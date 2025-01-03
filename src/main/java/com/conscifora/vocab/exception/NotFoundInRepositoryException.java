@@ -1,4 +1,4 @@
-package com.conscifora.common.exception;
+package com.conscifora.vocab.exception;
 
 public class NotFoundInRepositoryException extends RuntimeException{
 

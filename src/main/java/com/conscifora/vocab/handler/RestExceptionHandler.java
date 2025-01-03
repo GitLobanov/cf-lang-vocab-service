@@ -1,7 +1,7 @@
-package com.conscifora.common.handler;
+package com.conscifora.vocab.handler;
 
-import com.conscifora.common.exception.NotFoundInRepositoryException;
-import com.conscifora.common.exception.NotFoundResourceException;
+import com.conscifora.vocab.exception.NotFoundInRepositoryException;
+import com.conscifora.vocab.exception.NotFoundResourceException;
 import org.springframework.http.*;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.method.annotation.*;

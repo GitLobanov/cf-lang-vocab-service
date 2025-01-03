@@ -1,4 +1,4 @@
-package com.conscifora.common.contoller;
+package com.conscifora.vocab.controller;
 
 import jakarta.servlet.http.HttpServletResponse;
 import org.springframework.web.bind.annotation.GetMapping;
